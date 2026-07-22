@@ -5,7 +5,7 @@ Plugin framework for Vedrock: lifecycle hooks, command registration, and event l
 ## Installation
 
 ```
-v install https://github.com/bedrock-v/Vedrock03.git
+v install https://github.com/bedrock-v/plugins.git
 ```
 
 Then in your code:
