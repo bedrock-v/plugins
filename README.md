@@ -1,18 +1,6 @@
 # plugins
 
-Plugin framework for Vedrock: lifecycle hooks, command registration, and event listeners.
-
-## Installation
-
-```
-v install https://github.com/bedrock-v/plugins.git
-```
-
-Then in your code:
-
-```v
-import bedrock_v.plugins
-```
+Plugin framework for Vedrock: register plugins that hook into the server lifecycle.
 
 ## Usage
 
@@ -21,11 +9,10 @@ Create a plugin by implementing the `Plugin` interface:
 ```v
 module my_plugin
 
-import bedrock_v.plugins
+import plugins
+import vedrock.server
 
-pub struct MyPlugin {
-    plugins.Base
-}
+pub struct MyPlugin {}
 
 pub fn (p MyPlugin) meta() plugins.Meta {
     return plugins.Meta{
@@ -35,13 +22,20 @@ pub fn (p MyPlugin) meta() plugins.Meta {
     }
 }
 
-pub fn (mut p MyPlugin) on_enable(mut api plugins.Api) {
-    p.log.info('MyPlugin enabled')
+pub fn (mut p MyPlugin) on_enable(mut srv server.Server) {
+    srv.log.info('MyPlugin enabled')
+    srv.register_command(MyCommand{})
 }
 
-pub fn (mut p MyPlugin) on_disable() {
-    p.log.info('MyPlugin disabled')
-}
+pub fn (mut p MyPlugin) on_disable() {}
+```
+
+Wire it in your `main.v`:
+
+```v
+mut mgr := plugins.new_manager(&srv)
+mgr.register(MyPlugin{})
+mgr.enable_all()
 ```
 
 ## License

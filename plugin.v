@@ -1,6 +1,6 @@
 module plugins
 
-import vedrock.server.internal.logger
+import vedrock.server
 
 pub struct Meta {
 pub:
@@ -12,16 +12,6 @@ pub:
 pub interface Plugin {
     meta() Meta
 mut:
-    set_log(l &logger.Logger)
-    on_enable(mut api Api)
+    on_enable(mut srv server.Server)
     on_disable()
-}
-
-pub struct Base {
-pub mut:
-    log &logger.Logger = unsafe { nil }
-}
-
-pub fn (mut b Base) set_log(l &logger.Logger) {
-    b.log = l
 }
