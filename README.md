@@ -40,4 +40,4 @@ mgr.enable_all()
 
 ## License
 
-[LGPL-3.0](LICENSE)
+[MIT](LICENSE)
